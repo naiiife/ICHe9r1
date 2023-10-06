@@ -253,7 +253,7 @@ plot.inc <- function(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',
   legend(x,cex=cex,col=c('brown','darkcyan'),lwd=c(2,2),legend=legend)
 }
 
-plot.ate <- function(fit,nboot=0,seed=0,decrease=FALSE,conf.int=.95,xlab='Time',
+plot.ate <- function(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',
                       xlim=NULL,ylim=c(-1,1),...){
   fit.b = surv.boot(fit,nboot=nboot,seed=seed)
   tm = fit.b$Time
