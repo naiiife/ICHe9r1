@@ -196,20 +196,24 @@ surv.boot <- function(fit,nboot=0,seed=0){
   se = sqrt(se1^2+se0^2)
   if (fit$strategy=='natural') se = matchy(fit$se,fit$time1,Time)
   if (nboot>1){
-  te = NULL
+  cif1l = cif0l = te = NULL
   for(b in 1:nboot){
     wt = as.vector(rmultinom(1,N,rep(1/N,N)))
     fitb = surv.ICH(fit$A,fit$Time,fit$cstatus,fit$strategy,fit$cov1,fit$weights*wt,fit$subset)
-    cif1 = matchy(fitb$cif1,fitb$time1,Time)
-    cif0 = matchy(fitb$cif0,fitb$time0,Time)
-    te = rbind(te, cif1-cif0)
+    cifb1 = matchy(fitb$cif1,fitb$time1,Time)
+    cifb0 = matchy(fitb$cif0,fitb$time0,Time)
+    cif1l = rbind(cif1l, cifb1)
+    cif0l = rbind(cif0l, cifb0)
+    te = rbind(te, cifb1-cifb0)
   }
+  se1 = apply(cif1l,2,sd)
+  se0 = apply(cif0l,2,sd)
   se = apply(te,2,sd)
   }
-  return(list(Time=Time,ate=ate,se=se))
+  return(list(Time=Time,ate=ate,cif1=cif1,cif0=cif0,se1=se1,se0=se0,se=se))
 }
 
-plot.inc <- function(fit,decrease=FALSE,conf.int=.95,xlab='Time',xlim=NULL,
+plot.inc <- function(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',xlim=NULL,
                      ylim=c(0,1),legend=c('Treated','Controlled'),cex=0.8,...){
   if (decrease==TRUE){
     cif1 = 1-fit$cif1
@@ -239,14 +243,14 @@ plot.inc <- function(fit,decrease=FALSE,conf.int=.95,xlab='Time',xlim=NULL,
        xlab=xlab,ylab=ylab,ylim=ylim,...)
   points(t0,cif0,type='s',col='darkcyan',lwd=2)
   if (!is.null(conf.int)){
+    fit.b = surv.boot(fit,nboot=0,seed=0)
     z = -qnorm((1-conf.int)/2)
-    points(t1,cif1+fit$se1[i1]*z,type='s',lty=2,lwd=1.5,col='brown')
-    points(t1,cif1-fit$se1[i1]*z,type='s',lty=2,lwd=1.5,col='brown')
-    points(t0,cif0+fit$se0[i0]*z,type='s',lty=2,lwd=1.5,col='darkcyan')
-    points(t0,cif0-fit$se0[i0]*z,type='s',lty=2,lwd=1.5,col='darkcyan')
+    points(t1,cif1+fit.b$se1[i1]*z,type='s',lty=2,lwd=1.5,col='brown')
+    points(t1,cif1-fit.b$se1[i1]*z,type='s',lty=2,lwd=1.5,col='brown')
+    points(t0,cif0+fit.b$se0[i0]*z,type='s',lty=2,lwd=1.5,col='darkcyan')
+    points(t0,cif0-fit.b$se0[i0]*z,type='s',lty=2,lwd=1.5,col='darkcyan')
   }
-  legend(x,cex=cex,col=c('brown','darkcyan'),lwd=c(2,2),
-         legend=legend)
+  legend(x,cex=cex,col=c('brown','darkcyan'),lwd=c(2,2),legend=legend)
 }
 
 plot.ate <- function(fit,nboot=0,seed=0,decrease=FALSE,conf.int=.95,xlab='Time',
