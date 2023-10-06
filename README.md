@@ -8,4 +8,4 @@ Inference for Cumulative Incidences and Treatment Effects in Randomized Controll
     plot.inc(fit,decrease=FALSE,conf.int=.95,xlab='Time',xlim=NULL,ylim=c(0,1),legend=c('Treated','Controlled'),cex=0.8,...)
 
 ## Plot the estimated treatment effect
-    plot.boot(fit,nboot=0,seed=0,decrease=FALSE,conf.int=.95,xlab='Time',xlim=NULL,ylim=c(-1,1),...)
+    plot.ate(fit,nboot=0,seed=0,decrease=FALSE,conf.int=.95,xlab='Time',xlim=NULL,ylim=c(-1,1),...)
