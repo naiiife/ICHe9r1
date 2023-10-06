@@ -1,9 +1,9 @@
-## Causal inference for time-to-event data with intercurrent events (truncation by death)
-## main analysis function: surv.IVH(A,Time,cstatus,strategy,weights,subset)
+## Causal inference for time-to-event data with intercurrent events
+## main analysis function: surv.ICH(A,Time,cstatus,strategy,weights,subset)
 ## A: treatment
 ## Time: Event time
 ## cstatus: Event type, 1 for primary outcome, 2 for intercurrent event, 0 for censoring
-## weights: weights, can be ipscore(A,covA) (default by ALL)
+## weights: weights, can be ipscore(A,cov1) by inputting cov1 (default by NULL)
 ## subset: which subset of data to use, logical (default by ALL)
 ## draw cumulative incidence curv: plot.inc
 ## Calculate confidence interval: surv.boot(fit,nboot)
