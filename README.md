@@ -3,9 +3,24 @@ Inference for Cumulative Incidences and Treatment Effects in Randomized Controll
 
 ## Estimate the counterfactual cumulative incidences
     fit = surv.ICH(A,Time,cstatus,strategy='composite',cov1=NULL,weights=NULL,subset=NULL)
-        A: treatment
+    # A: treatment
+    # Time: time to event
+    # cstatus: event indicator, 1 for primary event, 2 for intercurrent event, 0 for censoring
+    # strategy: analysis strategy, "treatment", "composite", "natural", "removed", "whileon", "principal"
+    # cov1: baseline covariates to adjust (for propensity score weighting)
+    # weights: weights for each subject
+    # subset: subset of individuals used for analysis
+
 ## Plot the estimated countarfactual cumulative incidences
     plot.inc(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',xlim=NULL,ylim=c(0,1),legend=c('Treated','Controlled'),cex=0.8,...)
+    # fit: model
+    # decrease: FALSE for cumulative incidences, TRUE for survival probabilities
+    # conf.int: level of confidence interval
+    # nboot: resampling times for bootstrap to construct confidence interval
 
 ## Plot the estimated treatment effect
-    plot.ate(fit,nboot=0,seed=0,decrease=FALSE,conf.int=.95,xlab='Time',xlim=NULL,ylim=c(-1,1),...)
+    plot.ate(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',xlim=NULL,ylim=c(-1,1),...)
+    # fit: model
+    # decrease: FALSE for diff in cumulative incidences, TRUE for diff in survival probabilities
+    # conf.int: level of confidence interval
+    # nboot: resampling times for bootstrap to construct confidence interval
