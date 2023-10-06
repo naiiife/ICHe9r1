@@ -12,7 +12,8 @@ Inference for Cumulative Incidences and Treatment Effects in Randomized Controll
     # subset: subset of individuals used for analysis
 
 ## Plot the estimated countarfactual cumulative incidences
-    plot.inc(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',xlim=NULL,ylim=c(0,1),legend=c('Treated','Controlled'),cex=0.8,...)
+    plot.inc(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',xlim=NULL,ylim=c(0,1),
+             legend=c('Treated','Controlled'),cex=0.8,...)
     # fit: model
     # decrease: FALSE for cumulative incidences, TRUE for survival probabilities
     # conf.int: level of confidence interval
