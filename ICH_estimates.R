@@ -1,7 +1,6 @@
 ## Treatment Effect Estimation for Time-to-Event Data under ICH E9(R1)
 ## Competing risks data structure: 
 ## Only one of the primary event or intercurrent event is observed
-## Methodology: Inverse probability weighting (without variance output)
 
 library(survival)
 
@@ -322,7 +321,6 @@ surv.treatment <- function(A,Time,cstatus,weights=NULL,
 
 ### Example
 
-setwd('D:/Data/白血病')
 dat = read.csv('leukemiaPKU.csv')
 A = 1-dat$TRANSPLANT
 X = cbind(dat$MRD,dat$CR,dat$ALL)
