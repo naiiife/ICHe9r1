@@ -3,7 +3,8 @@
 ## A: treatment
 ## Time: Event time
 ## cstatus: Event type, 1 for primary outcome, 2 for intercurrent event, 0 for censoring
-## weights: weights, can be ipscore(A,cov1) by inputting cov1 (default by NULL)
+## cov1: baseline covariates to adjust
+## weights: weights (default by NULL)
 ## subset: which subset of data to use, logical (default by ALL)
 ## draw cumulative incidence curv: plot.inc
 ## Calculate confidence interval: surv.boot(fit,nboot)
@@ -248,7 +249,7 @@ plot.inc <- function(fit,decrease=FALSE,conf.int=.95,xlab='Time',xlim=NULL,
          legend=legend)
 }
 
-plot.boot <- function(fit,nboot=0,seed=0,decrease=FALSE,conf.int=.95,xlab='Time',
+plot.ate <- function(fit,nboot=0,seed=0,decrease=FALSE,conf.int=.95,xlab='Time',
                       xlim=NULL,ylim=c(-1,1),...){
   fit.b = surv.boot(fit,nboot=nboot,seed=seed)
   tm = fit.b$Time
