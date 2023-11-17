@@ -181,7 +181,7 @@ surv.principal <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
                  cumsum(M1*(S1+cif1))*(PR1+cif1))
   G4 = 2*cif1*(cumsum(M0*cif1^2) + cumsum(M0)*cif1*PR1 -
                  cumsum(M0*cif1)*(PR1+cif1))
-  se1 = sqrt(G1+G0+G3+G2+G5+G4)/PR1
+  se1 = sqrt(G1+G0+G3+G2-G5-G4)/PR1
   
   M1 = diff(c(0,fit10[,2]^2))
   M0 = diff(c(0,fit20[,2]^2))
@@ -196,7 +196,7 @@ surv.principal <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
                  cumsum(M1*(S0+cif0))*(PR0+cif0))
   G4 = 2*cif0*(cumsum(M0*cif0^2) + cumsum(M0)*cif0*PR0 -
                  cumsum(M0*cif0)*(PR0+cif0))
-  se0 = sqrt(G1+G0+G3+G2+G5+G4)/PR0
+  se0 = sqrt(G1+G0+G3+G2-G5-G4)/PR0
   return(list(time1=time1,time0=time0,cif1=cif1/PR1,cif0=cif0/PR0,
               se1=se1,se0=se0,p.val=NULL))
 }
