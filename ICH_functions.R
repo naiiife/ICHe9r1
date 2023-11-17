@@ -179,6 +179,8 @@ surv.principal <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
   dcif0 = S0*diff(c(0,fit10[,1]))
   cif1 = cumsum(dcif1)
   cif0 = cumsum(dcif0)
+  #PR1 = S1 + cif1
+  #PR0 = S0 + cif0
   PR1 = 1 - sum(S1*diff(c(0,fit21[,1])))
   PR0 = 1 - sum(S0*diff(c(0,fit20[,1])))
   
@@ -191,10 +193,8 @@ surv.principal <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
   G1 = cumsum(M1)*cif1^2 + cumsum(M1*(S1+cif1)^2) -
                  2*cif1*cumsum(M1*(S1+cif1))
   G0 = cumsum(M0)*cif1^2 + cumsum(M0*cif1^2) - 2*cif1*cumsum(M0*cif1)
-  G3 = cif1^2/PR1^2*(sum(M1)*(S1+cif1)^2 + sum(M1*(S1+cif1)^2) -
-                 2*(S1+cif1)*sum(M1*(S1+cif1)))
-  G2 = cif1^2/PR1^2*(sum(M0)*(S1+cif1)^2 + sum(M0*cif1^2) -
-                 2*(S1+cif1)*sum(M0*cif1))
+  G3 = cif1^2/PR1^2*sum(M1*(S1+cif1-PR1)^2)
+  G2 = cif1^2/PR1^2*sum(M0*(cif1-PR1)^2)
   G5 = 2*cif1/PR1*(cumsum(M1*(S1+cif1)^2) + cumsum(M1)*cif1*PR1 -
                  cumsum(M1*(S1+cif1))*(PR1+cif1))
   G4 = 2*cif1/PR1*(cumsum(M0*cif1^2) + cumsum(M0)*cif1*PR1 -
@@ -211,10 +211,8 @@ surv.principal <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
   G1 = cumsum(M1)*cif0^2 + cumsum(M1*(S0+cif0)^2) -
     2*cif0*cumsum(M1*(S0+cif0))
   G0 = cumsum(M0)*cif0^2 + cumsum(M0*cif0^2) - 2*cif0*cumsum(M0*cif0)
-  G3 = cif0^2/PR0^2*(sum(M1)*(S0+cif0)^2 + sum(M1*(S0+cif0)^2) -
-                 2*(S0+cif0)*sum(M1*(S0+cif0)))
-  G2 = cif0^2/PR0^2*(sum(M0)*(S0+cif0)^2 + sum(M0*cif0^2) -
-                 2*(S0+cif0)*sum(M0*cif0))
+  G3 = cif0^2/PR0^2*sum(M1*(S0+cif0-PR0)^2) 
+  G2 = cif0^2/PR0^2*sum(M0*(cif0-PR0)^2)
   G5 = 2*cif0/PR0*(cumsum(M1*(S0+cif0)^2) + cumsum(M1)*cif0*PR0 -
                  cumsum(M1*(S0+cif0))*(PR0+cif0))
   G4 = 2*cif0/PR0*(cumsum(M0*cif0^2) + cumsum(M0)*cif0*PR0 -
