@@ -93,13 +93,19 @@ surv.natural <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
   dcif0 = exp(-fit10[,1]-fit20[,1])*diff(c(0,fit10[,1]))
   cif1 = cumsum(dcif1)
   cif0 = cumsum(dcif0)
-  M1 = diff(c(0,fit11[,2]^2))
-  M0 = diff(c(0,fit20[,2]^2))
+  V1 = fit11[,2]^2
+  V0 = fit20[,2]^2
+  V1[is.infinite(V1)] = max(V1[!is.infinite(V1)])
+  V0[is.infinite(V0)] = max(V0[!is.infinite(V0)])
+  M1 = diff(c(0,V1))
+  M0 = diff(c(0,V0))
   G11 = cumsum(M1)*cif1^2 + cumsum(M1*(exp(-fit11[,1]-fit20[,1])+cif1)^2) -
     2*cif1*cumsum(M1*(exp(-fit11[,1]-fit20[,1])+cif1))
   G01 = cumsum(M0)*cif1^2 + cumsum(M0*cif1^2) - 2*cif1*cumsum(M0*cif1)
   se1 = sqrt(G11+G01)
-  M1 = diff(c(0,fit10[,2]^2))
+  V1 = fit10[,2]^2
+  V1[is.infinite(V1)] = max(V1[!is.infinite(V1)])
+  M1 = diff(c(0,V1))
   G10 = cumsum(M1)*cif0^2 + cumsum(M1*(exp(-fit10[,1]-fit20[,1])+cif0)^2) -
     2*cif0*cumsum(M1*(exp(-fit10[,1]-fit20[,1])+cif0))
   G00 = cumsum(M0)*cif0^2 + cumsum(M0*cif0^2) - 2*cif0*cumsum(M0*cif0)
@@ -129,14 +135,24 @@ surv.whileon <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
   dcif0 = exp(-fit10[,1]-fit20[,1])*diff(c(0,fit10[,1]))
   cif1 = cumsum(dcif1)
   cif0 = cumsum(dcif0)
-  M1 = diff(c(0,fit11[,2]^2))
-  M0 = diff(c(0,fit21[,2]^2))
+  V1 = fit11[,2]^2
+  V0 = fit21[,2]^2
+  V1[is.infinite(V1)] = max(V1[!is.infinite(V1)])
+  V0[is.infinite(V0)] = max(V0[!is.infinite(V0)])
+  M1 = diff(c(0,V1))
+  M0 = diff(c(0,V0))
   G1 = cumsum(M1)*cif1^2 + cumsum(M1*(exp(-fit11[,1]-fit21[,1])+cif1)^2) -
     2*cif1*cumsum(M1*(exp(-fit11[,1]-fit21[,1])+cif1))
   G0 = cumsum(M0)*cif1^2 + cumsum(M0*cif1^2) - 2*cif1*cumsum(M0*cif1)
   se1 = sqrt(G1+G0)
-  M1 = diff(c(0,fit10[,2]^2))
-  M0 = diff(c(0,fit20[,2]^2))
+  V1 = fit10[,2]^2
+  V0 = fit20[,2]^2
+  V1[is.infinite(V1)] = max(V1[!is.infinite(V1)])
+  V0[is.infinite(V0)] = max(V0[!is.infinite(V0)])
+  M1 = diff(c(0,V1))
+  M0 = diff(c(0,V0))
+  M1[is.infinite(M1)] = 0
+  M0[is.infinite(M0)] = 0
   G1 = cumsum(M1)*cif0^2 + cumsum(M1*(exp(-fit10[,1]-fit20[,1])+cif0)^2) -
     2*cif0*cumsum(M1*(exp(-fit10[,1]-fit20[,1])+cif0))
   G0 = cumsum(M0)*cif0^2 + cumsum(M0*cif0^2) - 2*cif0*cumsum(M0*cif0)
@@ -161,15 +177,17 @@ surv.principal <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
   S0 = exp(-fit10[,1]-fit20[,1])
   dcif1 = S1*diff(c(0,fit11[,1]))
   dcif0 = S0*diff(c(0,fit10[,1]))
-  dcif1 = S1*diff(c(0,fit11[,1]))
-  dcif0 = S0*diff(c(0,fit10[,1]))
   cif1 = cumsum(dcif1)
   cif0 = cumsum(dcif0)
   PR1 = 1 - sum(S1*diff(c(0,fit21[,1])))
   PR0 = 1 - sum(S0*diff(c(0,fit20[,1])))
   
-  M1 = diff(c(0,fit11[,2]^2))
-  M0 = diff(c(0,fit21[,2]^2))
+  V1 = fit11[,2]^2
+  V0 = fit21[,2]^2
+  V1[is.infinite(V1)] = max(V1[!is.infinite(V1)])
+  V0[is.infinite(V0)] = max(V0[!is.infinite(V0)])
+  M1 = diff(c(0,V1))
+  M0 = diff(c(0,V0))
   G1 = cumsum(M1)*cif1^2 + cumsum(M1*(S1+cif1)^2) -
                  2*cif1*cumsum(M1*(S1+cif1))
   G0 = cumsum(M0)*cif1^2 + cumsum(M0*cif1^2) - 2*cif1*cumsum(M0*cif1)
@@ -183,8 +201,12 @@ surv.principal <- function(A,Time,cstatus,weights=rep(1,length(A)),subset=NULL){
                  cumsum(M0*cif1)*(PR1+cif1))
   se1 = sqrt(G1+G0+G3+G2-G5-G4)/PR1
   
-  M1 = diff(c(0,fit10[,2]^2))
-  M0 = diff(c(0,fit20[,2]^2))
+  V1 = fit10[,2]^2
+  V0 = fit20[,2]^2
+  V1[is.infinite(V1)] = max(V1[!is.infinite(V1)])
+  V0[is.infinite(V0)] = max(V0[!is.infinite(V0)])
+  M1 = diff(c(0,V1))
+  M0 = diff(c(0,V0))
   G1 = cumsum(M1)*cif0^2 + cumsum(M1*(S0+cif0)^2) -
     2*cif0*cumsum(M1*(S0+cif0))
   G0 = cumsum(M0)*cif0^2 + cumsum(M0*cif0^2) - 2*cif0*cumsum(M0*cif0)
@@ -248,7 +270,7 @@ surv.boot <- function(fit,nboot=0,seed=0){
     se = apply(te,2,sd)
   }
   return(list(time1=time1,time0=time0,cif1=fit$cif1,cif0=fit$cif0,
-              se1=se1,se0=se0,Time=Time,ate=ate,se=se))
+              se1=se1,se0=se0,Time=Time,ate=ate,se=se,strategy=fit$strategy))
 }
 
 plot.inc <- function(fit,decrease=FALSE,conf.int=.95,nboot=0,seed=0,xlab='Time',xlim=NULL,
