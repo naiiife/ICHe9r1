@@ -254,6 +254,7 @@ surv.boot <- function(fit,nboot=0,seed=0){
   if (fit$strategy=='natural') se = matchy(fit$se,fit$time1,Time)
   if (nboot>1){
     cif1l = cif0l = te = NULL
+    set.seed(seed)
     for(b in 1:nboot){
       wt = as.vector(rmultinom(1,N,rep(1/N,N)))
       fitb = surv.ICH(fit$A,fit$Time,fit$cstatus,fit$strategy,fit$cov1,fit$weights*wt,fit$subset)
