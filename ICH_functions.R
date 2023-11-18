@@ -1,8 +1,9 @@
 ## Causal inference for time-to-event data with intercurrent events
-## surv.ICH(A,Time,cstatus,strategy,weights,subset): Calculate cumulative incidences
+## surv.ICH(A,Time,cstatus,strategy,cov1,weights,subset): Calculate cumulative incidences
 #### A: treatment
 #### Time: Event time
 #### cstatus: Event type, 1 for primary outcome, 2 for intercurrent event, 0 for censoring
+#### strategy: which analysis strategy is used
 #### cov1: baseline covariates to adjust, used in propensity score weighting
 #### weights: weights (default by NULL)
 #### subset: which subset of data to use, logical (default by using ALL)
