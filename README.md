@@ -7,7 +7,7 @@ Inference for Cumulative Incidences and Treatment Effects in Randomized Controll
     # Time: time to event
     # cstatus: event indicator, 1 for primary event, 2 for intercurrent event, 0 for censoring
     # strategy: analysis strategy, "treatment", "composite", "natural", "removed", "whileon", "principal"
-    # cov1: baseline covariates to adjust (for propensity score weighting)
+    # cov1: baseline covariates to adjust
     # method: estimation method, nonparametric (np) or efficient influence function based
     # weights: weights for each subject (applicable for nonparametric estimation)
     # subset: subset of individuals used for analysis
