@@ -4,10 +4,10 @@
 #### Time: Event time
 #### cstatus: Event type, 1 for primary outcome, 2 for intercurrent event, 0 for censoring
 #### strategy: which analysis strategy is used
-#### cov1: baseline covariates to adjust, used in propensity score weighting
-#### method: estimation method, np for ipw, eff for EIF based
+#### cov1: baseline covariates to adjust
+#### method: estimation method, np for IPW, otherwise EIF based
 #### weights: weights (default by NULL)
-#### subset: which subset of data to use, logical (default by using ALL)
+#### subset: which subset of data to use, logical (default by using all)
 ## surv.boot(fit): Calculate treatment effect and confidence interval
 #### nboot: 0 using analytical form, positive integer using bootstrap
 ## plot.inc(fit): Plot cumulative incidence curve with confidence interval
