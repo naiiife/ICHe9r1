@@ -2,13 +2,14 @@
 Inference for Cumulative Incidences and Treatment Effects in Randomized Controlled Trials with Time-to-Event Outcomes
 
 ## Estimate the counterfactual cumulative incidences
-    fit = surv.ICH(A,Time,cstatus,strategy='composite',cov1=NULL,weights=NULL,subset=NULL)
+    fit = surv.ICH(A,Time,cstatus,strategy='composite',cov1=NULL,method='np',weights=NULL,subset=NULL)
     # A: treatment
     # Time: time to event
     # cstatus: event indicator, 1 for primary event, 2 for intercurrent event, 0 for censoring
     # strategy: analysis strategy, "treatment", "composite", "natural", "removed", "whileon", "principal"
     # cov1: baseline covariates to adjust (for propensity score weighting)
-    # weights: weights for each subject
+    # method: estimation method, nonparametric (np) or efficient influence function based
+    # weights: weights for each subject (applicable for nonparametric estimation)
     # subset: subset of individuals used for analysis
 
 ## Plot the estimated countarfactual cumulative incidences
